@@ -1,0 +1,6 @@
+biopython
+matplotlib
+numpy
+bcbio-gff
+colorlog
+pandas
