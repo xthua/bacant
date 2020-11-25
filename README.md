@@ -9,10 +9,15 @@ This program is designed for annotation of antimicrobal resistance(AMR), inserti
 Install:
 
     Bacant is a python3.X script, running on linux. You can download from github by "git clone https://github.com/xthua/bacant.git".
-    First you should install BLAST and add it in environment variable， you can download from https://ftp.ncbi.nlm.nih.gov/blast/executables/blast+/. BLAST version is     2.7.1 in bacant.
-    Second read requirements.txt , check python module dependecies or just run: pip install -r requirements.txt. Be care of module version, incompatible version will report bug.
-    Last in bacant/Integron_finder/software, there are three exceute file require Execute Permission.
-      That means "cd bacant/Integron_finder/software && chmod +x cmsearch && chmod +x hmmsearch && chmod +x prodigal"
+    First:
+        You should install BLAST and add it in environment variable, you can download from https://ftp.ncbi.nlm.nih.gov/blast/executables/blast+/.
+        BLAST version is 2.7.1 in bacant.
+    Second:
+        Read requirements.txt , check python module dependecies or just run: pip install -r requirements.txt.
+        Be care of module version, incompatible version will report bug.
+    Last:
+        In bacant/Integron_finder/software, there are three exceute file require Execute Permission.
+        That means "cd bacant/Integron_finder/software && chmod +x cmsearch && chmod +x hmmsearch && chmod +x prodigal"
 
 
 Run:
