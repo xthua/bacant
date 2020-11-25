@@ -4,20 +4,35 @@ Email:      xiaotinghua@zju.edu.cn
 
 institute:  Key laboratory of Microbiol technology and Bioinformatics of Zhejiang Province
 
-This program is designed for annotation of resistance gene, insertion sequence, transposon and integron in bacteria.
+This program is designed for annotation of antimicrobal resistance(AMR), insertion sequence(IS), transposon(Tn) and integron(In) in bacteria.
+
+Install:
+
+    Bacant is a python3.X script, running on linux. You can download from github by "git clone https://github.com/xthua/bacant.git".
+    First you should install BLAST and add it in environment variable， you can download from https://ftp.ncbi.nlm.nih.gov/blast/executables/blast+/. BLAST version is     2.7.1 in bacant.
+    Second read requirements.txt , check python module dependecies or just run: pip install -r requirements.txt. Be care of module version, incompatible version will report bug.
+    Last in bacant/Integron_finder/software, there are three exceute file require Execute Permission.
+      That means "cd bacant/Integron_finder/software && chmod +x cmsearch && chmod +x hmmsearch && chmod +x prodigal"
 
 
 Run:
 
-    bacant is a python3.X script, running on linux.
-    1.BLAST is required, it shoud be added in environment variable.
-      Read requirements.txt , check your dependecies or just run: pip install -r requirements.txt.
-      Otherwise,in bacant/Integron_finder/software, there are three exceute file require Execute Permission.
-      That means  "cd bacant-master/Integron_finder/software && chmod +x cmsearch && chmod +x hmmsearch && chmod +x prodigal"
-    2.You can input FASTA or GENBANK format file:
+    Bacant can accept FASTA and GENBANK format file. Attention on GENBANK format file, it should follow standard format.
+    There are three input parameter, "-n" means FASTA, "-g" means GENBANK, "-D" means input dir contains FASTA or GENBANK.
+    Simply, you can just run:
       python main.py -n FASTA -o outdir
       python main.py -g GENBANK -o outdir
       python main.py -D input_dir -o outdir
+    For more parameter, you can run:
+      python main.py -h
+    Here are some import parameter:
+      --nucleotide(-n) FASTA file
+      --genbank(-g)    GENBANK file
+      --indir(-D)      input dirname
+      --resultdir(-o)  output dirname
+      --coverages(-c)  filtering coverage, default is "60|60|60|60", four numbers represents AMR,IS,In,Tn in turn
+      --identities(-i) filtering identity, default is "90|90|90|90", four numbers represents AMR,IS,In,Tn in turn
+
       
 Output:
 
