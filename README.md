@@ -7,7 +7,7 @@ institute:  Key laboratory of Microbiol technology and Bioinformatics of Zhejian
 This program is designed for annotation of antimicrobal resistance(AMR), insertion sequence(IS), transposon(Tn) and integron(In) in bacteria.
 
 ### Install:
-Bacant is a python3.X script, running on linux. You can download from github by `<git clone https://github.com/xthua/bacant.git>`.
+Bacant is a python3.X script, running on linux. You can download from github by `git clone https://github.com/xthua/bacant.git`.
 * First:
   You should install BLAST and add it in environment variable, you can download from `https://ftp.ncbi.nlm.nih.gov/blast/executables/blast+/`.
   BLAST version is 2.7.1 in bacant.
@@ -19,30 +19,28 @@ Bacant is a python3.X script, running on linux. You can download from github by 
   That means `cd bacant/Integron_finder/software && chmod +x cmsearch && chmod +x hmmsearch && chmod +x prodigal`
 
 
-Run:
-
-    Bacant can accept FASTA and GENBANK format file. Attention on GENBANK format file, it should follow standard format.
-    There are three input parameter, "-n" means FASTA, "-g" means GENBANK, "-D" means input dir contains FASTA or GENBANK.
-    Simply, you can just run:
-      python main.py -n FASTA -o outdir
-      python main.py -g GENBANK -o outdir
-      python main.py -D input_dir -o outdir
-    For more parameter, you can run:
-      python main.py -h
-    Here are some import parameter:
-      --nucleotide(-n) FASTA file
-      --genbank(-g)    GENBANK file
-      --indir(-D)      input dirname
-      --resultdir(-o)  output dirname
-      --coverages(-c)  filtering coverage, default is "60|60|60|60", four numbers represents AMR,IS,In,Tn in turn
-      --identities(-i) filtering identity, default is "90|90|90|90", four numbers represents AMR,IS,In,Tn in turn
+### Run:
+Bacant can accept FASTA and GENBANK format file. Attention on GENBANK format file, it should follow standard format.
+There are three input parameter, "-n" means FASTA, "-g" means GENBANK, "-D" means input dir contains FASTA or GENBANK.
+* Simply, you can just run:
+  python main.py -n FASTA -o outdir
+  python main.py -g GENBANK -o outdir
+  python main.py -D input_dir -o outdir
+* For more parameter, you can run:
+  python main.py -h
+* Here are some import parameter:
+  --nucleotide(-n) FASTA file
+  --genbank(-g)    GENBANK file
+  --indir(-D)      input dirname
+  --resultdir(-o)  output dirname
+  --coverages(-c)  filtering coverage, default is "60|60|60|60", four numbers represents AMR,IS,In,Tn in turn
+  --identities(-i) filtering identity, default is "90|90|90|90", four numbers represents AMR,IS,In,Tn in turn
 
       
-Output:
-
-    annotation.gb           GENBANK format annotation
-    AMR.xls                 resistance annotation
-    integron.filter.xls     most like integron
-    integron.detail.xls     integron_finder result,detail descripton of integron structure
-    ISfinder.filter.xls     insertion sequence
-    transposon.filter.xls   transposon element
+### Output:
+  annotation.gb           GENBANK format annotation
+  AMR.xls                 resistance annotation
+  integron.filter.xls     most like integron
+  integron.detail.xls     integron_finder result,detail descripton of integron structure
+  ISfinder.filter.xls     insertion sequence
+  transposon.filter.xls   transposon element
