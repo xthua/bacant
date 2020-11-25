@@ -12,7 +12,7 @@ Bacant is a python3.X script, running on linux. You can download from github by 
   You should install BLAST and add it in environment variable, you can download from `https://ftp.ncbi.nlm.nih.gov/blast/executables/blast+/`.
   BLAST version is 2.7.1 in bacant.
 * Second:  
-  Read requirements.txt , check python module dependecies or just run: pip install -r requirements.txt.
+  Read requirements.txt , check python module dependecies or just run: `pip install -r requirements.txt`.
   Be care of module version, incompatible version will report bug.
 * Last:  
   In bacant/Integron_finder/software, there are three exceute file require Execute Permission.
@@ -40,8 +40,8 @@ parameter  | description
 --genbank(-g) | GENBANK file
 --indir(-D) | input dirname
 --resultdir(-o) | output dirname
---coverages(-c) | filtering coverage, default is "60|60|60|60", four numbers represents AMR,IS,In,Tn in turn
---identities(-i) | filtering identity, default is "90|90|90|90", four numbers represents AMR,IS,In,Tn in turn
+--coverages(-c) | filtering coverage, default is "60\|60\|60\|60", four numbers represents AMR,IS,In,Tn in turn
+--identities(-i) | filtering identity, default is "90\|90\|90\|90", four numbers represents AMR,IS,In,Tn in turn
 
       
 ### Output:
