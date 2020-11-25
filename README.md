@@ -33,18 +33,18 @@ python main.py -D input_dir -o outdir
 python main.py -h
 ```
 * Here are some import parameter:
-> --nucleotide(-n) FASTA file
-> --genbank(-g)    GENBANK file
-> --indir(-D)      input dirname
-> --resultdir(-o)  output dirname
-> --coverages(-c)  filtering coverage, default is "60|60|60|60", four numbers represents AMR,IS,In,Tn in turn
-> --identities(-i) filtering identity, default is "90|90|90|90", four numbers represents AMR,IS,In,Tn in turn
+> --nucleotide(-n) FASTA file  
+> --genbank(-g)    GENBANK file  
+> --indir(-D)      input dirname  
+> --resultdir(-o)  output dirname  
+> --coverages(-c)  filtering coverage, default is "60|60|60|60", four numbers represents AMR,IS,In,Tn in turn  
+> --identities(-i) filtering identity, default is "90|90|90|90", four numbers represents AMR,IS,In,Tn in turn  
 
       
 ### Output:
-  annotation.gb           GENBANK format annotation
-  AMR.xls                 resistance annotation
-  integron.filter.xls     most like integron
-  integron.detail.xls     integron_finder result,detail descripton of integron structure
-  ISfinder.filter.xls     insertion sequence
-  transposon.filter.xls   transposon element
+> annotation.gb           GENBANK format annotation  
+> AMR.xls                 resistance annotation  
+> integron.filter.xls     most like integron  
+> integron.detail.xls     integron_finder result,detail descripton of integron structure  
+> ISfinder.filter.xls     insertion sequence  
+> transposon.filter.xls   transposon element  
