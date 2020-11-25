@@ -23,18 +23,22 @@ Bacant is a python3.X script, running on linux. You can download from github by 
 Bacant can accept FASTA and GENBANK format file. Attention on GENBANK format file, it should follow standard format.
 There are three input parameter, "-n" means FASTA, "-g" means GENBANK, "-D" means input dir contains FASTA or GENBANK.
 * Simply, you can just run:
-  python main.py -n FASTA -o outdir
-  python main.py -g GENBANK -o outdir
-  python main.py -D input_dir -o outdir
+```
+python main.py -n FASTA -o outdir
+python main.py -g GENBANK -o outdir
+python main.py -D input_dir -o outdir
+```
 * For more parameter, you can run:
-  python main.py -h
+```
+python main.py -h
+```
 * Here are some import parameter:
-  --nucleotide(-n) FASTA file
-  --genbank(-g)    GENBANK file
-  --indir(-D)      input dirname
-  --resultdir(-o)  output dirname
-  --coverages(-c)  filtering coverage, default is "60|60|60|60", four numbers represents AMR,IS,In,Tn in turn
-  --identities(-i) filtering identity, default is "90|90|90|90", four numbers represents AMR,IS,In,Tn in turn
+> --nucleotide(-n) FASTA file
+> --genbank(-g)    GENBANK file
+> --indir(-D)      input dirname
+> --resultdir(-o)  output dirname
+> --coverages(-c)  filtering coverage, default is "60|60|60|60", four numbers represents AMR,IS,In,Tn in turn
+> --identities(-i) filtering identity, default is "90|90|90|90", four numbers represents AMR,IS,In,Tn in turn
 
       
 ### Output:
