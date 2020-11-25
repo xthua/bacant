@@ -32,13 +32,13 @@ python main.py -D input_dir -o outdir
 ```
 python main.py -h
 ```
-* Here are some import parameter:
-> --nucleotide(-n) FASTA file  
-> --genbank(-g)    GENBANK file  
-> --indir(-D)      input dirname  
-> --resultdir(-o)  output dirname  
-> --coverages(-c)  filtering coverage, default is "60|60|60|60", four numbers represents AMR,IS,In,Tn in turn  
-> --identities(-i) filtering identity, default is "90|90|90|90", four numbers represents AMR,IS,In,Tn in turn  
+* Here are some import parameter:  
+--nucleotide(-n) FASTA file  
+--genbank(-g)    GENBANK file  
+--indir(-D)      input dirname  
+--resultdir(-o)  output dirname  
+--coverages(-c)  filtering coverage, default is "60|60|60|60", four numbers represents AMR,IS,In,Tn in turn  
+--identities(-i) filtering identity, default is "90|90|90|90", four numbers represents AMR,IS,In,Tn in turn  
 
       
 ### Output:
