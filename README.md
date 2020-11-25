@@ -13,7 +13,7 @@ Run:
     1.BLAST is required, it shoud be added in environment variable.
       Read requirements.txt , check your dependecies or just run: pip install -r requirements.txt.
       Otherwise,in bacant/Integron_finder/software, there are three exceute file require Execute Permission.
-      That means  "cd bacant/Integron_finder/software && chmod +x cmsearch && chmod +x hmmsearch && chmod +x prodigal"
+      That means  "cd bacant-master/Integron_finder/software && chmod +x cmsearch && chmod +x hmmsearch && chmod +x prodigal"
     2.You can input FASTA or GENBANK format file:
       python main.py -n FASTA -o outdir
       python main.py -g GENBANK -o outdir
