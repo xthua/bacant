@@ -16,7 +16,8 @@ Bacant is a python3.X script, running on linux. You can download from github by 
   Be care of module version, incompatible version will report bug.
 * Last:  
   In bacant/Integron_finder/software, there are three exceute file require Execute Permission.
-  That means `cd bacant/Integron_finder/software && chmod +x cmsearch && chmod +x hmmsearch && chmod +x prodigal`
+  That means `cd bacant/Integron_finder/software && chmod +x cmsearch && chmod +x hmmsearch && chmod +x prodigal`.
+  Then, add it in environment variable. That means `export PATH=$PATH:your_install_dir/bacant/Integron_Finder/software`.
 
 
 ### Run:
