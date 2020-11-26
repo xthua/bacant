@@ -2,7 +2,6 @@
 
 import sys,os,re,argparse
 import matplotlib
-#matplotlib.use('Agg')
 from matplotlib import pyplot as plt 
 import numpy as np
 from Bio import SeqIO
@@ -282,7 +281,7 @@ def AMR(nucleotide,resultdir,database,blastnPath,cov0,ident0):
     print("AMR done")
 
 def ISfinder(nucleotide,resultdir,blastn_path,cov1,ident1,database):
-    cmd = blastn_path+" -num_threads 8 -task blastn -query "+nucleotide+" -db "+database+" -outfmt \"6 qseqid sseqid pident length mismatch gapopen qstart qend sstart send evalue bitscore qseq sseq slen\" -out "+resultdir+"/ISfinder.xls"
+    cmd = blastn_path+" -task blastn -query "+nucleotide+" -db "+database+" -outfmt \"6 qseqid sseqid pident length mismatch gapopen qstart qend sstart send evalue bitscore qseq sseq slen\" -out "+resultdir+"/ISfinder.xls"
     subprocess.run(cmd,shell=True,stdout=subprocess.DEVNULL,stderr=subprocess.DEVNULL)
     with open(resultdir+"/ISfinder.xls", 'r+') as f:
         content = f.read()
@@ -434,7 +433,7 @@ def find_most_like_In(nucleotide,integron_pos_dict,resultdir,blastn_path,databas
         with open(integron_fasta,'a') as w:
             w.write(">"+name.replace("|","~")+"\n"+integron_seq+"\n")
     blast_result = resultdir+'/integron.blast.out'
-    cmd = blastn_path+" -num_threads 8 -query "+integron_fasta+" -db "+database+" -evalue 1e-5 -outfmt \"6 qseqid sseqid pident length mismatch gapopen qstart qend sstart send evalue bitscore qseq sseq slen\" -out "+blast_result
+    cmd = blastn_path+" -query "+integron_fasta+" -db "+database+" -evalue 1e-5 -outfmt \"6 qseqid sseqid pident length mismatch gapopen qstart qend sstart send evalue bitscore qseq sseq slen\" -out "+blast_result
     subprocess.run(cmd,shell=True,stdout=subprocess.DEVNULL,stderr=subprocess.DEVNULL)
     
     size = os.path.getsize(blast_result)
@@ -476,7 +475,7 @@ def find_most_like_In(nucleotide,integron_pos_dict,resultdir,blastn_path,databas
 
 
 def transposon(nucleotide,resultdir,blastn_path,cov3,ident3,database):
-    cmd = blastn_path+" -num_threads 8 -task blastn -query "+nucleotide+" -db "+database+" -evalue 1e-5 -outfmt \"6 qseqid sseqid pident length mismatch gapopen qstart qend sstart send evalue bitscore qseq sseq slen\" -out "+resultdir+"/transposon.xls"
+    cmd = blastn_path+" -task blastn -query "+nucleotide+" -db "+database+" -evalue 1e-5 -outfmt \"6 qseqid sseqid pident length mismatch gapopen qstart qend sstart send evalue bitscore qseq sseq slen\" -out "+resultdir+"/transposon.xls"
     subprocess.run(cmd,shell=True,stdout=subprocess.DEVNULL,stderr=subprocess.DEVNULL)
     size = os.path.getsize(resultdir+"/transposon.xls")
     blast_result = resultdir+'/transposon.xls'
