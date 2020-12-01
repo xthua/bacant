@@ -34,14 +34,26 @@ def arg_parse():
     parser.add_argument("--identities","-i",help="filtering identity",default="90|90|90|90")
     parser.add_argument("--indir","-D",help="input dir")
     args = parser.parse_args()
-    nucleotide = args.nucleotide
-    genbank = args.genbank
-    resultdir = args.resultdir.rstrip("/")
-    databases = args.databases
-    coverages = args.coverages
-    identities = args.identities
-    indir = args.indir
-    return nucleotide,genbank,resultdir,databases,coverages,identities,indir
+    if args.resultdir:
+        nucleotide = args.nucleotide
+        genbank = args.genbank
+        resultdir = args.resultdir.rstrip("/")
+        databases = args.databases
+        coverages = args.coverages
+        identities = args.identities
+        indir = args.indir
+        return nucleotide,genbank,resultdir,databases,coverages,identities,indir
+    else:
+        print("""
+    This program is designed for annotation of antimicrobal resistance(AMR), insertion sequence(IS), transposon(Tn) and integron(In) in bacteria.
+    Simply run:
+        python main.py -n FASTA -o outdir
+        python main.py -g GENBANK -o outdir
+        python main.py -D input_dir -o outdir
+    For more parameter, you can run:
+        python main.py -h
+        """)
+        sys.exit(0)
 
 #conver gff to genbank
 def convert(gff_file, fasta_file,resultdir,gb_file):
