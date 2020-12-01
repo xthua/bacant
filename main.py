@@ -146,6 +146,8 @@ def parse_genbank(genbank,resultdir):
         break
 
 def parse_fasta(name,nucleotide,resultdir):
+    os.system("sed -i 's/|/-/g' %s"%nucleotide)
+    os.system("sed -i 's/~/-/g' %s"%nucleotide)
     outfile = resultdir+'/nucleotide_all.fasta'
     outfile2 = resultdir+'/nucleotide.fasta'
     location = resultdir+'/gb_location.txt'
