@@ -1,0 +1,1 @@
+bacant -n example.fasta -o result
