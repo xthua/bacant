@@ -7,31 +7,26 @@ institute:  Key laboratory of Microbiol technology and Bioinformatics of Zhejian
 This program is designed for annotation of antimicrobal resistance(AMR), insertion sequence(IS), transposon(Tn) and integron(In) in bacteria.
 
 ### Install:
-Bacant is a python3.X script, running on linux. You can download from github by `git clone https://github.com/xthua/bacant.git`.
-* First:  
-  You should install BLAST and add it in environment variable, you can download from `https://ftp.ncbi.nlm.nih.gov/blast/executables/blast+/`.
-  BLAST version is 2.7.1 in bacant.
-* Second:  
-  Read requirements.txt , check python module dependecies or just run: `pip install -r requirements.txt`.
-  Be care of module version, incompatible version will report bug.
-* Last:  
-  In bacant/Integron_finder/software, there are three exceute file require Execute Permission.
-  That means `cd bacant/Integron_finder/software && chmod +x cmsearch && chmod +x hmmsearch && chmod +x prodigal`.
-  Then, add it in environment variable. That means `export PATH=$PATH:your_install_dir/bacant/Integron_Finder/software`.
+Bacant is a python3.X script, running on linux. 
+You should install BLAST and add it in environment variable, you can download from `https://ftp.ncbi.nlm.nih.gov/blast/executables/blast+/`. BLAST version is 2.7.1 in bacant.
 
+* One:
+  You can download from github by `git clone https://github.com/xthua/bacant.git`. Then execute `python setup.py install`.
+* Two:
+  You can install BacAnt from pypi by `pip install BacAnt`.
 
 ### Run:
-Bacant can accept FASTA and GENBANK format file. Attention on GENBANK format file, it should follow standard format.
+BacAnt can accept FASTA and GENBANK format file. Attention on GENBANK format file, it should follow standard format.
 There are three input parameter, "-n" means FASTA, "-g" means GENBANK, "-D" means input dir contains FASTA or GENBANK.
 * Simply, you can just run:
 ```
-python main.py -n FASTA -o outdir
-python main.py -g GENBANK -o outdir
-python main.py -D input_dir -o outdir
+bacant -n FASTA -o outdir
+bacant -g GENBANK -o outdir
+bacant -D input_dir -o outdir
 ```
 * For more parameter, you can run:
 ```
-python main.py -h
+bacant -h
 ```
 * Here are some import parameter:
 
@@ -50,8 +45,9 @@ parameter  | description
 filename  | description
 ---- | -----
 annotation.gb | GENBANK format annotation
-AMR.xls | resistance annotation
-integron.filter.xls | most like integron
-integron.detail.xls | integron_finder result,detail descripton of integron structure
-ISfinder.filter.xls | insertion sequence
-transposon.filter.xls | transposon element
+AMR.tsv | resistance annotation
+replicon.tsv | replicon annotation
+integron.filter.tsv | most like integron
+integron.detail.tsv | integron_finder result,detail descripton of integron structure
+ISfinder.filter.tsv | insertion sequence
+transposon.filter.tsv | transposon element
