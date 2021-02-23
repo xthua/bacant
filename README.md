@@ -1,4 +1,4 @@
-Author:     Hong Wenjie at 20191126
+Author:     Hong Wenjie
 
 Email:      xiaotinghua@zju.edu.cn
 
