@@ -1,9 +1,9 @@
 import sys
+import os
 from time import localtime, strftime
 
 __version__ = '2-{}'.format(strftime("%Y-%m-%d", localtime()))
-current_dir = sys.path[0]
-__INTEGRON_DATA__ = current_dir+"/Integron_Finder"
+__INTEGRON_DATA__ = os.path.dirname(os.path.abspath(__file__))+'/..'
 
 
 class IntegronError(Exception):
