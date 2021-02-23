@@ -13,7 +13,7 @@ You should install BLAST and add it in environment variable, you can download fr
 * One:
   You can download from github by `git clone https://github.com/xthua/bacant.git`. Then execute `python setup.py install`.
 * Two:
-  You can install BacAnt from > [pypi](https://pypi.org/project/BacAnt/3.0.0) by `pip install BacAnt`.
+  You can install BacAnt from [pypi](https://pypi.org/project/BacAnt/3.0.0) by `pip install BacAnt`.
 
 ### Run:
 BacAnt can accept FASTA and GENBANK format file. Attention on GENBANK format file, it should follow standard format.
