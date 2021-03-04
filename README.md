@@ -54,4 +54,5 @@ integron.filter.tsv | most like integron
 integron.detail.tsv | integron_finder result,detail descripton of integron structure
 ISfinder.filter.tsv | filtered insertion sequences
 ISfinder.tsv | all possible insertion sequences
-transposon.filter.tsv | transposon element
+transposon.filter.tsv | transposon element after overlap screen
+transposon.possible.tsv | all possible transposon element
