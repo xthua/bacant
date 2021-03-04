@@ -13,7 +13,7 @@ You should install BLAST and add it in environment variable, you can download fr
 * One:
   You can download from github by `git clone https://github.com/xthua/bacant.git`. Then execute `python setup.py install`.
 * Two:
-  You can install BacAnt from [pypi](https://pypi.org/project/BacAnt) by `pip install BacAnt`.
+  You can install BacAnt from [PyPI](https://pypi.org/project/BacAnt) by `pip install BacAnt`.
 * Three:
   When installation, maybe packages confict exists. Use conda to fix it. `conda create -n bacant python=3.6` create a virtual environment, `pip install BacAnt`.
 
