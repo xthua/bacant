@@ -527,7 +527,44 @@ def transposon(nucleotide,resultdir,blastn_path,cov3,ident3,database):
                 w.write(newData)
         os.remove(blast_result)
         os.remove(filter_result_temp)
-        format_genbank(filter_result,outfile,flag,nucleotide,resultdir)
+        os.system("mv %s %s/transposon.possible.xls"%(filter_result,resultdir))
+        final_result = resultdir+'/transposon.filter.xls'
+        f = open("%s/transposon.possible.xls"%resultdir)
+        tmp = {}
+        tmp1 = []
+        lines = f.readlines()
+        for line in lines[1:]:
+            line = line.strip()
+            if line:
+                data = line.split("\t")
+                start = data[6]
+                if start not in tmp:
+                    tmp[start] = []
+                tmp[start].append(line)
+                if int(start) not in tmp1:
+                    tmp1.append(int(start))
+        f.close()
+        with open(final_result,'w') as w:
+            w.write(lines[0])
+        tmp1.sort()
+        for key in tmp1:
+            key = str(key)
+            if len(tmp[key])>1:
+                max_ident = 0
+                max_cov = 0
+                for data in tmp[key]:
+                    ident1 = float(data.split("\t")[2])
+                    cov1 = float(data.split("\t")[-1])
+                    if ident1 >= max_ident and cov1>=max_cov:
+                        max_ident = ident1
+                        max_cov = cov1
+                        max_info = data
+                with open(final_result,'a') as w:
+                    w.write(max_info+"\n")
+            else:
+                with open(final_result,'a') as w:
+                    w.write(tmp[key][0]+'\n')
+        format_genbank(final_result,outfile,flag,nucleotide,resultdir)
         print("transposon done")
     else:
         os.remove(blast_result)
