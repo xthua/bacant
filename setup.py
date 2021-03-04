@@ -51,7 +51,6 @@ classifiers = [
     'Environment :: Console',
     'Operating System :: POSIX',
     'Programming Language :: Python :: 3',
-    'Programming Language :: Python :: 3.4',
     'Programming Language :: Python :: 3.5',
     'Programming Language :: Python :: 3.6',
     'Programming Language :: Python :: 3.7',
@@ -61,7 +60,7 @@ classifiers = [
 ]
  
 install_requires = [
-    'biopython==1.77',
+    'biopython==1.76',
     'matplotlib==3.1.3',
     'numpy==1.19.0',
     'bcbio-gff==0.6.6',
@@ -71,7 +70,7 @@ install_requires = [
 ]
      
 setup(name='BacAnt',
-      version='3.0.0',
+      version='3.1.0',
       description='This program is designed for annotation of antimicrobal resistance(AMR), insertion sequence(IS), transposon(Tn) and integron(In) in bacteria',
       long_description=long_des,
       packages=['BacAnt','BacAnt/Integron_Finder','BacAnt/Integron_Finder/integron_finder','BacAnt/Integron_Finder/scripts'],
