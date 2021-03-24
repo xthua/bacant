@@ -271,7 +271,10 @@ def find_integron_in_one_replicon(replicon, config):
     try:
         if not config.no_proteins:
             if not os.path.isfile(intI_file) or not os.path.isfile(phageI_file):
-                find_integrase(replicon.id, protein_db.protfile, result_tmp_dir, config)
+                if os.path.exists(protein_db.protfile) and os.path.getsize(protein_db.protfile) != 0:
+                    find_integrase(replicon.id, protein_db.protfile, result_tmp_dir, config)
+                else:
+                    return "",""
         if not os.path.isfile(attC_default_file):
             # find attc with cmsearch
             find_attc(tmp_replicon_path, replicon.name, config.cmsearch, result_tmp_dir, config.model_attc_path,
