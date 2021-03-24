@@ -20,10 +20,6 @@ from threading import Thread
 from BacAnt.Integron_Finder.scripts.finder import run_integron_finder
 warnings.filterwarnings('ignore')
 
-#hongwj 20191126
-#usage: python3.7 main.py -o result -n test.fasta -c "90|90|90|90" -i "60|60|60|60" -d "resDB|ISDatabase|IntegronDB|TransposonDB" or python main.py -o result -g genbank.gb or python main.py -o result -D indir
-
-#arg parse
 def arg_parse():
     parser = argparse.ArgumentParser()
     parser.add_argument("--nucleotide","-n",help="nucleotide file")
@@ -111,39 +107,20 @@ def format_fasta(annot,seq,num):
 
 def parse_genbank(genbank,resultdir):
     gb_seqs=SeqIO.parse(genbank,"gb")
+    index = 0
     for gb_seq in gb_seqs:
+        index += 1
         complete_seq=str(gb_seq.seq)
-        if "accessions" in gb_seq.annotations and gb_seq.description != "":
+        if gb_seq.id != "":
+            complete_annot=">"+gb_seq.id+'\n'
+        elif "accessions" in gb_seq.annotations and gb_seq.description != "":
             complete_annot=">"+gb_seq.annotations["accessions"][0] + " " + gb_seq.description + "\n"
-        elif "accessions" not in gb_seq.annotations and gb_seq.description != "":
-            complete_annot=">"+ gb_seq.description + "\n"
         else:
-            complete_annot=">"+'sequence'+"\n"
+            complete_annot=">"+'sequence'+str(index)+"\n"
         complete_fasta = format_fasta(complete_annot, complete_seq, 60)
-        index = 0
-        feature_list = []
-        for key in gb_seq.features:
-            feature_list.append(key.type)
-        if 'CDS' in feature_list:
-            for key in gb_seq.features:
-                if key.type == "CDS":
-                    if 'locus_tag' in key.qualifiers:
-                        with open(resultdir+'/gb_location.txt','a') as w:
-                            w.write(str(key.location).split(":")[0].split("[")[1].strip('<')+':'+str(key.location).split(":")[1].split("]")[0].strip('>')+'\t'+str(key.qualifiers['locus_tag'][0])+'\t0\n')
-                    else:
-                        index = index + 1
-                        with open(resultdir+'/gb_location.txt','a') as w:
-                            w.write(str(key.location).split(":")[0].split("[")[1].strip('<')+':'+str(key.location).split(":")[1].split("]")[0].strip('>')+'\t'+'locus%s'%index+'\t0\n')
-        else:
-            for key in gb_seq.features:
-                if key.type == "source":
-                    index = index + 1
-                    with open(resultdir+'/gb_location.txt','a') as w:
-                        w.write(str(key.location).split(":")[0].split("[")[1].strip('<')+':'+str(key.location).split(":")[1].split("]")[0].strip('>')+'\t'+'locus%s'%index+'\t0\n')
-        complete_file = resultdir+"/nucleotide.fasta"
+        complete_file = resultdir+"/gb.fasta"
         complete_file_obj = open(complete_file, "a")
         complete_file_obj.write(complete_fasta)
-        break
 
 def parse_fasta(name,nucleotide,resultdir):
     outfile = resultdir+'/nucleotide_all.fasta'
@@ -172,8 +149,7 @@ def mkdir(resultdir):
         os.system("rm -rf %s/*"%resultdir)
 
 def findResistanceGene(inFile,outdir,blastnPath,database,default_ident,default_cov):
-    resistanceGenePosList = []
-    cmd = blastnPath + ' -task blastn -dust no -evalue 1E-5 -culling_limit 1 -query ' + inFile + ' -db ' + database + ' -outfmt \"6 sseqid pident length  qstart qend slen sstrand qseqid gaps\" -out ' + outdir + '/blast.out'
+    cmd = blastnPath + ' -task blastn -dust no -evalue 1E-5 -culling_limit 1 -query ' + inFile + ' -db ' + database + ' -outfmt \"6 sseqid pident length  qstart qend slen sstrand qseqid gaps sstart send\" -out ' + outdir + '/blast.out'
     subprocess.run(cmd,shell=True,stdout=subprocess.DEVNULL,stderr=subprocess.DEVNULL)
     blastResultDict = {}
     f = open(outdir+'/blast.out')
@@ -183,90 +159,101 @@ def findResistanceGene(inFile,outdir,blastnPath,database,default_ident,default_c
     else:
         for line in lines:
             data = line.strip().split('\t')
+            contig_name = data[7]
             product = re.split('~~~',data[0])[3]
             acc = re.split('~~~',data[0])[2]
             ident = float(data[1])
             cov = float(data[2])*100/int(data[5])
+            if cov>=100:
+                cov=100
             leftPos = data[3]
             rightPos = data[4]
             name = re.split('~~~',data[0])[1]+" "+leftPos+" "+rightPos
             strand = data[6]
-            covlen = '1-'+data[2]+'/'+data[5]
-            data = str(ident)+'|'+str(cov)+'|'+leftPos+'|'+rightPos+'|'+name+'|'+strand+'|'+data[-2].replace('|','~')+'|'+data[-1]+'|'+product+'|'+acc+'|'+covlen
-            if name not in blastResultDict:
-                blastResultDict[name] = []
-                blastResultDict[name].append(data)
+            if int(data[9])<int(data[10]):
+                covlen = data[9]+'-'+data[10]+'/'+data[5]
             else:
-                blastResultDict[name].append(data)
+                covlen = data[10]+'-'+data[9]+'/'+data[5]
+            data = str(ident)+'|'+str(cov)+'|'+leftPos+'|'+rightPos+'|'+name+'|'+strand+'|'+data[7].replace('|','~')+'|'+data[8]+'|'+product+'|'+acc+'|'+covlen
+            if contig_name not in blastResultDict:
+                blastResultDict[contig_name] = {}
+            if name not in blastResultDict[contig_name]:
+                blastResultDict[contig_name][name] = []
+                blastResultDict[contig_name][name].append(data)
+            else:
+                blastResultDict[contig_name][name].append(data)
     f.close()
     with open(outdir+'/AMR.possible.xls','w') as w:
-        w.write('#FILE	SEQUENCE	START	END	STRAND	GENE	COVERAGE	COVERAGE_MAP	GAPS	%COVERAGE	%IDENTITY	DATABASE	ACCESSION	PRODUCT	RESISTANCE\n')
-    for name,dataList in blastResultDict.items():
-        for data in dataList:
-            ident = float(data.split('|')[0])
-            cov = float(data.split('|')[1])
-            leftPos = data.split('|')[2]
-            rightPos = data.split('|')[3]
-            name = data.split('|')[4].split(" ")[0]
-            strand = data.split('|')[5]
-            query = data.split('|')[6].replace('~','|')
-            gaps = data.split('|')[7]
-            product1 = data.split('|')[8]
-            acc1 = data.split('|')[9]
-            covlen1 = data.split('|')[10]
-            if ident >= default_ident and cov >= default_cov:
-                bestLeftPos = leftPos
-                bestRightPos = rightPos
-                pos = bestLeftPos + '-' + bestRightPos
-                bestStand = strand
-                bestIdent = format(ident, '0.2f')
-                bestCov = format(cov, '0.2f')
-                with open(outdir+'/AMR.possible.xls','a') as w:
-                    w.write('nucleotide.fasta'+'\t'+query+'\t'+bestLeftPos+'\t'+bestRightPos+'\t'+bestStand+'\t'+name+'\t'+covlen1+'\t'+'.'+'\t'+gaps+'\t'+str(bestCov)+'\t'+str(bestIdent)+'\t'+'resDB'+'\t'+acc1+'\t'+product1+'\n')
-                
+        w.write('#FILE  SEQUENCE    START   END STRAND  GENE    COVERAGE    COVERAGE_MAP    GAPS    %COVERAGE   %IDENTITY   DATABASE    ACCESSION   PRODUCT RESISTANCE\n')
+    for contig_name1,dict1 in blastResultDict.items():
+        for name,dataList in dict1.items():
+            for data in dataList:
+                ident = float(data.split('|')[0])
+                cov = float(data.split('|')[1])
+                leftPos = data.split('|')[2]
+                rightPos = data.split('|')[3]
+                name = data.split('|')[4].split(" ")[0]
+                strand = data.split('|')[5]
+                query = data.split('|')[6].replace('~','|')
+                gaps = data.split('|')[7]
+                product1 = data.split('|')[8]
+                acc1 = data.split('|')[9]
+                covlen1 = data.split('|')[10]
+                if ident >= default_ident and cov >= default_cov:
+                    bestLeftPos = leftPos
+                    bestRightPos = rightPos
+                    pos = bestLeftPos + '-' + bestRightPos
+                    bestStand = strand
+                    bestIdent = format(ident, '0.2f')
+                    bestCov = format(cov, '0.2f')
+                    with open(outdir+'/AMR.possible.xls','a') as w:
+                        w.write('nucleotide.fasta'+'\t'+query+'\t'+bestLeftPos+'\t'+bestRightPos+'\t'+bestStand+'\t'+name+'\t'+covlen1+'\t'+'.'+'\t'+gaps+'\t'+str(bestCov)+'\t'+str(bestIdent)+'\t'+'resDB'+'\t'+acc1+'\t'+product1+'\n')
+                    
     with open(outdir+'/AMR.result','w') as w:
-        w.write('#FILE	SEQUENCE	START	END	STRAND	GENE	COVERAGE	COVERAGE_MAP	GAPS	%COVERAGE	%IDENTITY	DATABASE	ACCESSION	PRODUCT	RESISTANCE\n')
-    for name,dataList in blastResultDict.items():
-        maxIdent = default_ident
-        maxCov = default_cov
-        pos = ''
-        for data in dataList:
-            ident = float(data.split('|')[0])
-            cov = float(data.split('|')[1])
-            leftPos = data.split('|')[2]
-            rightPos = data.split('|')[3]
-            name = data.split('|')[4].split(" ")[0]
-            strand = data.split('|')[5]
-            query = data.split('|')[6]
-            gaps = data.split('|')[7]
-            product1 = data.split('|')[8]
-            acc1 = data.split('|')[9]
-            covlen1 = data.split('|')[10]
-            if ident >= maxIdent and cov >= maxCov:
-                bestLeftPos = leftPos
-                bestRightPos = rightPos
-                pos = bestLeftPos + '-' + bestRightPos
-                bestStand = strand
-                bestIdent = format(ident, '0.2f')
-                bestCov = format(cov, '0.2f')
-        
-        if pos != '':
-            left1 = int(pos.split('-')[0])
-            right1 = int(pos.split('-')[1])
-            flag = True
-            if resistanceGenePosList != []:
-                for po in resistanceGenePosList:
-                    left2 = int(po.split('-')[0])
-                    right2 = int(po.split('-')[1])
-                    if left1 < right2 and right1 > left2:
-                        flag = False
-                        break
-                    else:
-                        continue
-            if flag:
-                with open(outdir+'/AMR.result','a') as w:
-                    w.write('nucleotide.fasta'+'\t'+query+'\t'+bestLeftPos+'\t'+bestRightPos+'\t'+bestStand+'\t'+name+'\t'+covlen1+'\t'+'.'+'\t'+gaps+'\t'+str(bestCov)+'\t'+str(bestIdent)+'\t'+'resDB'+'\t'+acc1+'\t'+product1+'\n')
-                resistanceGenePosList.append(pos)
+        w.write('#FILE  SEQUENCE    START   END STRAND  GENE    COVERAGE    COVERAGE_MAP    GAPS    %COVERAGE   %IDENTITY   DATABASE    ACCESSION   PRODUCT RESISTANCE\n')
+    for contig_name1,dict1 in blastResultDict.items():
+        resistanceGenePosList = []
+        for name,dataList in dict1.items():
+            maxIdent = default_ident
+            maxCov = default_cov
+            pos = ''
+            for data in dataList:
+                ident = float(data.split('|')[0])
+                cov = float(data.split('|')[1])
+                leftPos = data.split('|')[2]
+                rightPos = data.split('|')[3]
+                name = data.split('|')[4].split(" ")[0]
+                strand = data.split('|')[5]
+                query = data.split('|')[6]
+                gaps = data.split('|')[7]
+                product1 = data.split('|')[8]
+                acc1 = data.split('|')[9]
+                covlen1 = data.split('|')[10]
+                if ident >= maxIdent and cov >= maxCov:
+                    bestLeftPos = leftPos
+                    bestRightPos = rightPos
+                    pos = bestLeftPos + '-' + bestRightPos
+                    bestStand = strand
+                    bestIdent = format(ident, '0.2f')
+                    bestCov = format(cov, '0.2f')
+            
+            if pos != '':
+                left1 = int(pos.split('-')[0])
+                right1 = int(pos.split('-')[1])
+                flag = True
+                if resistanceGenePosList != []:
+                    for po in resistanceGenePosList:
+                        left2 = int(po.split('-')[0])
+                        right2 = int(po.split('-')[1])
+                        if left1 < right2 and right1 > left2:
+                            flag = False
+                            break
+                        else:
+                            continue
+                if flag:
+                    with open(outdir+'/AMR.result','a') as w:
+                        w.write('nucleotide.fasta'+'\t'+query+'\t'+bestLeftPos+'\t'+bestRightPos+'\t'+bestStand+'\t'+name+'\t'+covlen1+'\t'+'.'+'\t'+gaps+'\t'+str(bestCov)+'\t'+str(bestIdent)+'\t'+'resDB'+'\t'+acc1+'\t'+product1+'\n')
+                    resistanceGenePosList.append(pos)
     os.remove(outdir + '/blast.out')
 
 
@@ -294,7 +281,7 @@ def AMR(nucleotide,resultdir,database,blastnPath,cov0,ident0):
     f.close()
     with open(outfile,'w') as w:
         w.write(datas[0])
-    newDatas = sorted(datas[1:],key = lambda data:(int(data.split('\t')[2])))
+    newDatas = sorted(datas[1:],key = lambda data:(data.split('\t')[1],int(data.split('\t')[2])))
     for newData in newDatas:
         tmp_list = newData.split('\t')
         newData2 = tmp_list[0]+'\t'+tmp_list[1].replace('~','|')+'\t'+'\t'.join(tmp_list[2:])
@@ -439,7 +426,6 @@ def parse_integron_result(resultdir,merged_integron_path):
             start = v[0]
             end = v[-1]
             integron_pos_dict[k] = str(start)+"|"+str(end)
-        #shutil.move(integron_file,resultdir)
         return integron_pos_dict
     else:
         return {}
@@ -489,17 +475,10 @@ def find_most_like_In(nucleotide,integron_pos_dict,resultdir,blastn_path,databas
                 name_tmp.append(data_name)
                 with open(filter_result,'a') as w:
                     w.write(newData)
-        #os.remove(blast_result)
         os.remove(filter_result_temp)
         format_genbank(filter_result,outfile,"integron",nucleotide,resultdir)
-        #print("integron done")
     else:
         os.remove(blast_result)
-        #print("no integron hits")
-    
-
-
-
 
 def transposon(nucleotide,resultdir,blastn_path,cov3,ident3,database):
     cmd = blastn_path+" -num_threads 8 -task blastn -query "+nucleotide+" -db "+database+" -evalue 1e-5 -outfmt \"6 qseqid sseqid pident length mismatch gapopen qstart qend sstart send evalue bitscore qseq sseq slen\" -out "+resultdir+"/transposon.xls"
@@ -527,6 +506,7 @@ def transposon(nucleotide,resultdir,blastn_path,cov3,ident3,database):
                 w.write(newData)
         os.remove(blast_result)
         os.remove(filter_result_temp)
+        
         os.system("mv %s %s/transposon.possible.xls"%(filter_result,resultdir))
         final_result = resultdir+'/transposon.filter.xls'
         f = open("%s/transposon.possible.xls"%resultdir)
@@ -858,7 +838,7 @@ def getFileFormat(infile):
 
 def run():
     nucleotide,genbank,resultdir,databases,coverages,identities,indir = arg_parse()
-    curent_dir = os.path.dirname(os.path.abspath(__file__))
+    curent_dir = sys.path[0].rstrip('/')+'/../BacAnt'
     database = databases.split("|")
     resDB = database[0]
     ISDatabase = database[1]
@@ -903,8 +883,9 @@ def run():
                 fileFormat = getFileFormat(infile)
                 if fileFormat=="genbank":
                     parse_genbank(infile,outdir)
+                    name = re.sub('[^\w-]','',infile.split("/")[-1].split(".")[0])
+                    parse_fasta(name,outdir+'/gb.fasta',outdir)
                     nucleotide = outdir+"/nucleotide.fasta"
-                    protein = outdir+"/protein.fasta"
                 elif fileFormat=="fasta":
                     name = re.sub('[^\w-]','',infile.split("/")[-1].split(".")[0])
                     parse_fasta(name,infile,outdir)
@@ -989,6 +970,8 @@ def run():
                     os.remove(outdir+"/nucleotide_all.fasta")
                 if os.path.exists(outdir+"/nucleotide.fasta"):
                     os.remove(outdir+"/nucleotide.fasta")
+                if os.path.exists(outdir+"/gb.fasta"):
+                    os.remove(outdir+"/gb.fasta")
                 if os.path.exists(outdir+"/integron.blast.out"):
                     os.remove(outdir+"/integron.blast.out")
                 if os.path.exists(outdir+"/integron.fa"):
@@ -1014,8 +997,9 @@ def run():
                     sys.exit(-1)
                 print ("Analysing file",genbank," at "+time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()))
                 parse_genbank(genbank,resultdir)
+                name = re.sub('[^\w-]','',genbank.split("/")[-1].split(".")[0])
+                parse_fasta(name,resultdir+'/gb.fasta',resultdir)
                 nucleotide = resultdir+"/nucleotide.fasta"
-                protein = resultdir+"/protein.fasta"
                 
             #fasta input
             else:
@@ -1106,6 +1090,8 @@ def run():
                 os.remove(resultdir+"/nucleotide_all.fasta")
             if os.path.exists(resultdir+"/nucleotide.fasta"):
                 os.remove(resultdir+"/nucleotide.fasta")
+            if os.path.exists(resultdir+"/gb.fasta"):
+                os.remove(resultdir+"/gb.fasta")
             if os.path.exists(resultdir+"/integron.blast.out"):
                 os.remove(resultdir+"/integron.blast.out")
             if os.path.exists(resultdir+"/integron.fa"):
