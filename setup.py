@@ -70,7 +70,7 @@ install_requires = [
 ]
      
 setup(name='BacAnt',
-      version='3.1.0',
+      version='3.2.0',
       description='This program is designed for annotation of antimicrobal resistance(AMR), insertion sequence(IS), transposon(Tn) and integron(In) in bacteria',
       long_description=long_des,
       packages=['BacAnt','BacAnt/Integron_Finder','BacAnt/Integron_Finder/integron_finder','BacAnt/Integron_Finder/scripts'],
