@@ -1,6 +1,6 @@
 import colorlog
 import pandas as pd
-from pandas.io.common import EmptyDataError
+
 
 _log = colorlog.getLogger(__name__)
 
@@ -55,7 +55,7 @@ def merge_results(*results_file):
     for one_result in results_file:
         try:
             res = pd.read_csv(one_result, sep="\t", comment='#')
-        except EmptyDataError:
+        except:
             continue
         all_res.append(res)
     if all_res:
