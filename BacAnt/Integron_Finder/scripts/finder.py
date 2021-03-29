@@ -429,7 +429,7 @@ def run_integron_finder(current_dir,resultdir,nucleotide,args=None, loglevel=Non
     :param loglevel: the output verbosity
     :type loglevel: a positive int or a string among 'DEBUG', 'INFO', 'WARNING', 'ERROR', 'CRITICAL'
     """
-
+    current_dir = os.path.dirname(os.path.abspath(__file__))+'/../..'
     #args = sys.argv[1:] if args is None else args
     cmsearch = current_dir+"/Integron_Finder/software/cmsearch"
     hmmsearch = current_dir+"/Integron_Finder/software/hmmsearch"
