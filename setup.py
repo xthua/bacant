@@ -70,8 +70,8 @@ install_requires = [
 ]
      
 setup(name='BacAnt',
-      version='3.2.0',
-      description='This program is designed for annotation of antimicrobal resistance(AMR), insertion sequence(IS), transposon(Tn) and integron(In) in bacteria',
+      version='3.3.0',
+      description='This program is designed for annotation of antimicrobal resistance(AMR), transposon(Tn) and integron(In) in bacteria',
       long_description=long_des,
       packages=['BacAnt','BacAnt/Integron_Finder','BacAnt/Integron_Finder/integron_finder','BacAnt/Integron_Finder/scripts'],
       author = "Hong Wenjie",  
@@ -80,7 +80,7 @@ setup(name='BacAnt',
       platforms=platforms,
       classifiers=classifiers,
       install_requires=install_requires,
-      data_files=expand_data([('BacAnt/Integron_Finder/data/',['BacAnt/Integron_Finder/data']),('BacAnt/IntegronDB',['BacAnt/IntegronDB']),('BacAnt/ISDatabase',['BacAnt/ISDatabase']),('BacAnt/repliconDB',['BacAnt/repliconDB']),('BacAnt/resDB',['BacAnt/resDB']),('BacAnt/Test',['BacAnt/Test']),('BacAnt/TransposonDB',['BacAnt/TransposonDB']),('BacAnt/Integron_Finder/software',['BacAnt/Integron_Finder/software'])]),
+      data_files=expand_data([('BacAnt/Integron_Finder/data/',['BacAnt/Integron_Finder/data']),('BacAnt/IntegronDB',['BacAnt/IntegronDB']),('BacAnt/repliconDB',['BacAnt/repliconDB']),('BacAnt/resDB',['BacAnt/resDB']),('BacAnt/Test',['BacAnt/Test']),('BacAnt/TransposonDB',['BacAnt/TransposonDB']),('BacAnt/Integron_Finder/software',['BacAnt/Integron_Finder/software'])]),
       entry_points = {
         'console_scripts': [
             'bacant = BacAnt.bacant:run',
