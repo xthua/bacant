@@ -655,10 +655,10 @@ def format_genbank(infile,outfile,flag,fasta_file,resultdir):
             if flag == "transposon":
                 if db_xref == "":
                     with open(outfile,"a") as w:
-                        w.write(filename+'\t'+source+'\t'+features[3]+'\t'+start+'\t'+end+'\t.\t'+strand+'\t.\tlocus_tag='+locus+';gene='+CDS+';gene='+gene+'\n')
+                        w.write(filename+'\t'+source+'\t'+features[3]+'\t'+start+'\t'+end+'\t.\t'+strand+'\t.\tlocus_tag='+locus+';transposon='+CDS+';gene='+gene+'\n')
                 else:
                     with open(outfile,"a") as w:
-                        w.write(filename+'\t'+source+'\t'+features[3]+'\t'+start+'\t'+end+'\t.\t'+strand+'\t.\tlocus_tag='+locus+';gene='+CDS+';db_xref='+db_xref+';gene='+gene+'\n')
+                        w.write(filename+'\t'+source+'\t'+features[3]+'\t'+start+'\t'+end+'\t.\t'+strand+'\t.\tlocus_tag='+locus+';transposon='+CDS+';db_xref='+db_xref+';gene='+gene+'\n')
             
     f.close()
     for file in os.listdir(resultdir):
