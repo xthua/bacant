@@ -55,7 +55,8 @@ Here are databases structure:
   │   ├── Integron.nin
   │   └── Integron.nsq
   ├── ResDB
-  │   ├── Res.fasta         Resistance gene reference sequences in FASTA format,sequence id must be database name~~~gene~~~accession~~~description,eg:  ncbi~~~1567214_ble~~~NG_047553.1~~~BLEOMYCIN BLMA family bleomycin binding protein
+  │   ├── Res.fasta         Resistance gene reference sequences in FASTA format,sequence id must be database name~~~gene~~~accession~~~description,
+  │   │                     eg:  ncbi~~~1567214_ble~~~NG_047553.1~~~BLEOMYCIN BLMA family bleomycin binding protein
   │   ├── Res.nhr
   │   ├── Res.nin
   │   └── Res.nsq
