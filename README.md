@@ -39,8 +39,9 @@ parameter  | description
 --genbank(-g) | GENBANK file
 --indir(-D) | input dirname
 --resultdir(-o) | output dirname
---coverages(-c) | filtering coverage, default is "60\|\|60\|60", four numbers represents AMR,In,Tn in turn
---identities(-i) | filtering identity, default is "90\|\|90\|90", four numbers represents AMR,In,Tn in turn
+--databases(-d) | reference databases,default is ResDB,IntegronDB,TransposonDB
+--coverages(-c) | filtering coverage, default is "60,60,60", three numbers represents AMR,In,Tn in turn
+--identities(-i) | filtering identity, default is "90,90,90", three numbers represents AMR,In,Tn in turn
 
 ### Databases:
 We have updated database to v2.0(2021.05.11) since BacAnt-v3.3.1. You can download from [here](http://bacant.net/static/database/v2.0/bacant-db-v2.0.tar.gz).
