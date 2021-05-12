@@ -47,6 +47,7 @@ We have updated database to v2.0(2021.05.11). You can download from [here](http:
 User can define their custom databases, and when run bacant ,just add parameter -p(--path) for databases dirname.
 Here are databases structure:
 
+<pre>
   .
   ├── IntegronDB
   │   ├── Integron.fasta    Integron reference sequences in FASTA format,sequence id must be description|accession,eg: In0|PAU49101
@@ -63,7 +64,7 @@ Here are databases structure:
       ├── Transposon.nhr
       ├── Transposon.nin
       └── Transposon.nsq
-      
+</pre>      
 ### Output:
 
 filename  | description
