@@ -44,8 +44,11 @@ parameter  | description
 
 ### Databases:
 We have updated database to v2.0(2021.05.11). You can download from [here](http://bacant.net/static/database/v2.0/bacant-db-v2.0.tar.gz).
+
 User can define their custom databases, and when run bacant ,just add parameter -p(--path) for databases dirname.
+
 Here are databases structure:
+
 .
 ├── IntegronDB
 │   ├── Integron.fasta    Integron reference sequences in FASTA format,sequence id must be description|accession,eg: In0|PAU49101
