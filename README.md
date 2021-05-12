@@ -50,18 +50,21 @@ Here are databases structure:
 <pre>
   .
   ├── IntegronDB
-  │   ├── Integron.fasta    Integron reference sequences in FASTA format,sequence id must be description|accession,eg: In0|PAU49101
+  │   ├── Integron.fasta    Integron reference sequences in FASTA format
+  │   │                     sequence id must be description|accession,eg: In0|PAU49101
   │   ├── Integron.nhr
   │   ├── Integron.nin
   │   └── Integron.nsq
   ├── ResDB
-  │   ├── Res.fasta         Resistance gene reference sequences in FASTA format,sequence id must be database name~~~gene~~~accession~~~description,
+  │   ├── Res.fasta         Resistance gene reference sequences in FASTA format
+  │   │                     sequence id must be database name~~~gene~~~accession~~~description,
   │   │                     eg:  ncbi~~~1567214_ble~~~NG_047553.1~~~BLEOMYCIN BLMA family bleomycin binding protein
   │   ├── Res.nhr
   │   ├── Res.nin
   │   └── Res.nsq
   └── TransposonDB
-      ├── Transposon.fasta  Transposon reference sequences in FASTA format,sequence id must be description|accession,eg: Tn2009|CP001937
+      ├── Transposon.fasta  Transposon reference sequences in FASTA format
+      │                     sequence id must be description|accession,eg: Tn2009|CP001937
       ├── Transposon.nhr
       ├── Transposon.nin
       └── Transposon.nsq
