@@ -44,27 +44,25 @@ parameter  | description
 
 ### Databases:
 We have updated database to v2.0(2021.05.11). You can download from [here](http://bacant.net/static/database/v2.0/bacant-db-v2.0.tar.gz).
-
 User can define their custom databases, and when run bacant ,just add parameter -p(--path) for databases dirname.
-
 Here are databases structure:
 
-.
-├── IntegronDB
-│   ├── Integron.fasta    Integron reference sequences in FASTA format,sequence id must be description|accession,eg: In0|PAU49101
-│   ├── Integron.nhr
-│   ├── Integron.nin
-│   └── Integron.nsq
-├── ResDB
-│   ├── Res.fasta         Resistance gene reference sequences in FASTA format,sequence id must be database name~~~gene~~~accession~~~description,eg: ncbi~~~1567214_ble~~~NG_047553.1~~~BLEOMYCIN BLMA family bleomycin binding protein
-│   ├── Res.nhr
-│   ├── Res.nin
-│   └── Res.nsq
-└── TransposonDB
-    ├── Transposon.fasta  Transposon reference sequences in FASTA format,sequence id must be description|accession,eg: Tn2009|CP001937
-    ├── Transposon.nhr
-    ├── Transposon.nin
-    └── Transposon.nsq
+  .
+  ├── IntegronDB
+  │   ├── Integron.fasta    Integron reference sequences in FASTA format,sequence id must be description|accession,eg: In0|PAU49101
+  │   ├── Integron.nhr
+  │   ├── Integron.nin
+  │   └── Integron.nsq
+  ├── ResDB
+  │   ├── Res.fasta         Resistance gene reference sequences in FASTA format,sequence id must be database name~~~gene~~~accession~~~description,eg:  ncbi~~~1567214_ble~~~NG_047553.1~~~BLEOMYCIN BLMA family bleomycin binding protein
+  │   ├── Res.nhr
+  │   ├── Res.nin
+  │   └── Res.nsq
+  └── TransposonDB
+      ├── Transposon.fasta  Transposon reference sequences in FASTA format,sequence id must be description|accession,eg: Tn2009|CP001937
+      ├── Transposon.nhr
+      ├── Transposon.nin
+      └── Transposon.nsq
       
 ### Output:
 
