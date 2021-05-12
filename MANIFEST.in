@@ -5,7 +5,7 @@ include LICENSE
 include requirements.txt
 recursive-include BacAnt/Integron_Finder *
 recursive-include BacAnt/IntegronDB *
-recursive-include BacAnt/resDB *
+recursive-include BacAnt/ResDB *
 recursive-include BacAnt/TransposonDB *
 recursive-include BacAnt/repliconDB *
 recursive-include BacAnt/Test *
