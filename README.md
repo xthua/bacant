@@ -43,7 +43,7 @@ parameter  | description
 --identities(-i) | filtering identity, default is "90\|\|90\|90", four numbers represents AMR,In,Tn in turn
 
 ### Databases:
-We have updated database to v2.0(2021.05.11). You can download from [here](http://bacant.net/static/database/v2.0/bacant-db-v2.0.tar.gz).
+We have updated database to v2.0(2021.05.11) since BacAnt-v3.4.0. You can download from [here](http://bacant.net/static/database/v2.0/bacant-db-v2.0.tar.gz).
 User can define their custom databases, and when run bacant ,just add parameter -p(--path) for databases dirname.
 Here are databases structure:
 
