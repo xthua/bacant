@@ -342,7 +342,7 @@ def generate_html(data,categories,endpos,outdir):
   <meta name="Author" content="">
   <meta name="Keywords" content="">
   <meta name="Description" content="">
-  <title>pdif structure</title>
+  <title>Graph</title>
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts@4.8.0/dist/echarts.js"></script>
  </head>
  <body>
