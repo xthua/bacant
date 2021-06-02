@@ -1,5 +1,5 @@
-include bacant.py
-include html_data.py
+include BacAnt/bacant.py
+include BacAnt/html_data.py
 include README.rst
 include LICENSE
 include requirements.txt
