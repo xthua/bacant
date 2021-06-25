@@ -710,7 +710,7 @@ def format_genbank(infile,outfile,flag,fasta_file,resultdir):
                 source = "transposon"
             #strand
             if flag == "AMR":
-                strand = line[4]
+                strand = line[4].replace("plus","+").replace("minus","-")
             else:
                 if int(line[8]) < int(line[9]):
                     strand = "+"
