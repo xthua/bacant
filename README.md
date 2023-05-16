@@ -10,11 +10,11 @@ This program is designed for annotation of antimicrobal resistance(AMR), transpo
 Bacant is a python3.X script, running on linux. 
 You should install BLAST and add it in environment variable, you can download from `https://ftp.ncbi.nlm.nih.gov/blast/executables/blast+/`. BLAST version is 2.7.1 in bacant.
 
-* One:
+* First:
   You can download from github by `git clone https://github.com/xthua/bacant.git`. Then execute `python setup.py install`.
-* Two:
+* Second:
   You can install BacAnt from [PyPI](https://pypi.org/project/BacAnt) by `pip install BacAnt`.
-* Three:
+* Third:
   You can install BacAnt from [anaconda](https://anaconda.org/bacant/bacant).
   First,`conda create -n bacant` create a virtual environment.Then `conda install -c bacant -c conda-forge -c bioconda bacant ` install bacant.
 
